@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "init": "^0.1.2",
+    "install": "^0.13.0",
+    "mongodb": "^6.8.0"
+  }
+}

@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'WavePado';
+    src: url('path/to/wave-pado-font.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+    height: 932px;
+    padding: 15px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.container {
+    width: 430px;
+    height: 932px;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    border-radius: 15px;
+    text-align: center;
+    padding-top: 50px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container h1 {
+    font-size: 48px;
+    color: #f28b27;
+    margin-bottom: 50px;
+}
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.input-container input {
+    width: 70%;
+    padding: 15px;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    background-color: #e0e0e0;
+    border-radius: 15px;
+    margin-left: 10px;
+    color: #f28b27;
+}
+.input-box {
+    display: flex;
+    align-items: center;
+    border: 2px solid #f28b27;
+    border-radius: 15px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin-bottom: 20px;
+    margin-left: 10px
+}
+.input-box img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+.input-box input {
+    flex: 1;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #f28b27;
+}
+.button-container {
+    margin: 40px 0;
+}
+.button-container button {
+    width: 80%;
+    padding: 15px;
+    font-size: 20px;
+    color: #fff;
+    background: linear-gradient(90deg, #f28b27, #f39c27);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.links a {
+    margin: 0 10px;
+    color: #f28b27;
+    text-decoration: none;
+    font-size: 14px;
+}

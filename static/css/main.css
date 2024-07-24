@@ -1,0 +1,106 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard-Regular', Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo {
+    background-image: url(../icon/Title.png);
+    width: 130px; /* 너비를 컨테이너에 맞추기 */
+    height: 84px;
+    background-size: contain;
+    background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
+    background-position: center; /* 이미지가 중앙에 위치하도록 설정 */
+    margin: auto;
+    margin-top: 50px;
+    display: block;
+}
+
+.MBTI {
+    width: 364px;
+    height: 200px;
+    background: linear-gradient(to bottom, rgb(242, 176, 73), rgb(255, 136, 0));
+    transition: background 0.3s ease;
+
+    margin-top: 50px;
+    
+    font-size: 1.5em;
+}
+
+.box {
+    display: flex; /* Flexbox 레이아웃 사용 */
+    justify-content: space-around; /* 버튼들이 수평으로 균등하게 배치되도록 설정 */
+    margin-top: 80px;
+}
+
+.JOB, .Mypage {
+    background-color: #ff7b2e;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+    padding: 10px; /* 여백 추가 */
+    box-sizing: border-box; /* 패딩 포함한 박스 크기 */
+}
+
+.JOB > h2, .Mypage > h2 {
+    font-size: 2em; /* 텍스트 크기 조정 */
+    margin: 0;
+    padding: 0;
+}
+
+.JOB > p, .Mypage > p {
+    font-size: 1em; /* 텍스트 크기 조정 */
+    margin: 0;
+    padding: 0;
+    margin-top: 5px; /* 텍스트 사이의 간격 조정 */
+}
+
+
+
+.MBTI, .JOB, .Mypage {
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Pretendard', sans-serif; /* Pretendard 폰트 적용 */
+    color: white; /* 글자 색상은 버튼 배경과 대비되게 */
+    border: none;
+}
+
+.MBTI:hover {
+    background: linear-gradient(to bottom, rgb(222, 156, 53), rgb(235, 116, 0)); /* 약간 어두운 색상으로 호버 효과 */
+}
+
+.JOB:hover, .Mypage:hover {
+    background-color: #d0672a;
+}

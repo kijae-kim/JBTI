@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직업 정보</title>
+    <link rel="stylesheet" href="/static/css/job_info.css">
+    <script defer src="/static/js/job_info.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="head">
+            <header>
+                <h1>직업 정보</h1>
+            </header>
+            <div class="selection-container">
+                <select class="job-select" id="job-select">
+                    <option value="직무" selected> 직무 선택 </option>
+                </select>
+            </div>
+            <div class="selection-container">
+                <select class="job-type-select" id="job-type-select">
+                    <option value="직종" selected> 직종 선택 </option>
+                </select>
+            </div>
+        </div>
+        <div class="info-container">
+            <p>직종: <span id="selected-job"></span></p>
+            <div class="info-group">
+                <label for="job-description">직업 설명:</label>
+                <textarea id="job-description" readonly></textarea>
+            </div>
+            <div class="info-group">
+                <label for="job-duties">수행 직무:</label>
+                <textarea id="job-duties" readonly></textarea>
+            </div>
+            <div class="info-group">
+                <label for="job-skills">필요기술 및 지식:</label>
+                <textarea id="job-skills" readonly></textarea>
+            </div>
+            <div class="info-group">
+                <label for="job-outlook">직업 전망:</label>
+                <textarea id="job-outlook" readonly></textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

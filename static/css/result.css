@@ -1,0 +1,140 @@
+/* 폰트 적용하기*/
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+body {
+    font-family: 'Pretendard Variable', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden; /* Ensure no horizontal scroll */
+}
+p {
+    text-align: left;
+    font-size: 1em;
+    line-height: 1.6;
+    color: #333;
+    padding: 10px;
+    margin: 0;
+    word-break: break-all;
+}
+.container {
+    max-width: 370px;
+    height: 670px;
+    text-align: center;
+    border: 0px solid;
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+.title {
+    font-size: 2.2em;
+    margin: 20px;
+    margin-top: 40px;
+    color: #FF7B2E;
+}
+.hist {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+.histogram-button {
+    color: white;
+    border: none;
+    padding: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 4px #D35400;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: absolute;
+    width: 200px;
+    height: 200px;
+}
+#MBTI {
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    background-color: #FF7B2E;
+}
+#JOB {
+    top: 50%;
+    right: 30%;
+    transform: translate(50%, -50%);
+    background-color: #FFB52C;
+}
+.histogram-button:hover {
+    box-shadow: 0 6px #D35400;
+    transform: translateY(-2px);
+}
+.histogram-button:active {
+    box-shadow: 0 2px #D35400;
+    transform: translateY(2px);
+}
+.result-box {
+    max-width: 350px;
+    height: auto;
+    border: 2px solid #FF8800;
+    border-radius: 10px;
+    overflow-y: hidden; /* Changed to auto */
+
+    transition: height 0.3s ease; /* Smooth transition */
+}
+
+#line1, #line2, #line3 {
+    color: #FF8800;
+}
+
+.hidden {
+    display: none;
+}
+
+.plus, .close {
+    background: linear-gradient(to bottom, #F2B049, #FF8800);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+
+.box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.download {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-top: 40px;
+    padding: 0;
+}
+.download img {
+    width: 30px;
+    height: 30px;
+}
+
+#sentence, #ulim, #Top3 {
+    padding: 10px;
+    margin: 10px 0;
+    border-top: 1px solid #FF8800;
+}
+
+#adaptation p, #sentence p, #ulim p, #Top3 p {
+    margin: 5px 0;
+    color: #FF8800;
+}
+
+#sentence p:first-child, #ulim p:first-child {
+    font-weight: bold;
+}

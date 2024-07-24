@@ -1,0 +1,193 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Pretendard-Regular', Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+    height: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Header Styles */
+.main-header {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #FF7F00;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.main-header h1 {
+    font-size: 2em;
+    color: #fff;
+}
+
+/* Image Section Styles */
+.image-section {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Dropdown Styles */
+.dropdown {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.dropdown-button {
+    background-color: #fff;
+    border: 2px solid #FF7F00;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.2em;
+    color: #FF7F00;
+    cursor: pointer;
+    width: 380px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+}
+
+.triangle {
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    width: 380px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 200px;
+    overflow-y: auto;
+    border: 2px solid #FF7F00;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.dropdown-content li {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    list-style: none;
+}
+
+.dropdown-content li:hover {
+    background-color: #FF7F00;
+    color: #fff;
+}
+
+/* Result Button Styles */
+.result-button {
+    background-color: #FF7F00;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-size: 1.5em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 380px;
+    margin-top: 50px;
+    display: block;
+}
+
+.result-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Image Space for future image below MBTI selection */
+.image-space1 {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.image-space {
+    width: 100%;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dropdown-button, .result-button {
+        width: 90%;
+        font-size: 1em;
+        padding: 12px;
+    }
+
+    .dropdown-content {
+        width: 90%;
+    }
+
+    .main-header h1 {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .dropdown-button, .result-button {
+        width: 95%;
+        font-size: 0.9em;
+        padding: 10px;
+    }
+
+    .dropdown-content {
+        width: 95%;
+    }
+
+    .main-header h1 {
+        font-size: 1.3em;
+    }
+}

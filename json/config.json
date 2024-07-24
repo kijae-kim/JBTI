@@ -1,0 +1,13 @@
+{
+  "mongodb": {
+    "uri": "mongodb+srv://zzcv00:dwiqPBh62FHd1sLb@coffee.ntxtbdl.mongodb.net/?retryWrites=true&w=majority&appName=coffee",
+    "db_name": "lkj",
+    "collections": {
+      "mbti_detail": "mbti_detail",
+      "holland_result": "holland_result",
+      "job_detail": "job_detail",
+      "mbti_holland": "mbti_holland",
+      "results_collection": "results_collection"
+    }
+  }
+}

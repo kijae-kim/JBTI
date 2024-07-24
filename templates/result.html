@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href="/static/css/result.css">
+</head>
+<body>
+    <main class="container">
+        <h2 class="title">Result</h2>
+        <div class="hist">
+            <button class="histogram-button" id="MBTI">MBTI</button>
+            <button class="histogram-button" id="JOB">JOB</button>
+        </div>
+        <div class="result-box" id="result-box">
+            <div class="adaptation" id="adaptation">
+                <p>1. 성격과 직업 적합도</p>
+                <p id="line1"></p>
+            </div>
+            <div id="sentence" class="hidden">
+                <p>2. 성격 설명</p>
+                <p id="line2"></p>
+            </div>
+            <div id="ulim" class="hidden">
+                <p>3. 나와 맞는 직업은?</p>
+                <p id="line3"></p>
+            </div>
+            <div id="Top3" class="hidden">
+                <p id="line4"></p>
+                <p id="line5"></p>
+                <p id="line6"></p>
+            </div>
+            <div class="box" id="box">
+                <button class="plus" id="plus">결과 더보기</button>
+                <button class="download" id="download"><img src="/static/icon/download.png" alt=""></button>
+            </div>
+        </div>
+    </main>
+    <script src="/static/js/result.js"></script>
+</body>
+</html>

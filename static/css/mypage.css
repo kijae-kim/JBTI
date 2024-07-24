@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 100%;
+    max-width: 430px;
+    height: 932px;
+    padding: 15px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+header h1 {
+    font-size: 3em;
+    color: #FF7F00;
+}
+
+.member-info {
+    width: 350px; 
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+    font-size: 1.2em;
+    position: relative;
+}
+
+.info-group label {
+    flex: 0.5; /* Label takes half the space */
+    text-align: center;
+    margin-left: 20px;
+    display: flex;
+    align-items: center; /* Aligns text vertically center */
+    height: 100%; /* Ensures label spans full height of info-group */
+}
+
+.info-group span {
+    flex: 1.5; /* Span takes the remaining space */
+    text-align: center; /* Center text horizontally */
+    display: flex;
+    align-items: center; /* Aligns text vertically center */
+    justify-content: center; /* Centers text horizontally */
+    position: relative;
+}
+
+.info-group span::after {
+    content: '';
+    position: absolute;
+    right: -7%; /* Adjust this value to position the underline closer or farther from the text */
+    bottom: -5px;
+    width: 90%; /* Set width to 70% */
+    height: 1px;
+    background-color: #FFA500; /* Slightly lighter than #FF7F00 */
+}
+
+.button-group {
+    width: 100%;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.action-button {
+    background-color: #FF7F00;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-row .action-button {
+    width: calc(50% - 5px);
+}
+
+.action-button.full-width {
+    width: 100%;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+    border-top: 1px solid #ccc;
+    margin-top: 40px; /* Adjusted to match the footer position */
+}
+
+.nav-icon {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+/* Responsive design */
+@media (max-width: 430px) {
+    .container {
+        width: 100%;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .info-group {
+        font-size: 1em;
+    }
+
+    .action-button {
+        font-size: 1em;
+        padding: 10px;
+    }
+
+    .nav-icon {
+        font-size: 1.2em;
+    }
+}
