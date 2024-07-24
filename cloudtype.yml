@@ -1,0 +1,9 @@
+version: '1.0'
+
+app:
+  name: my-fastapi-app
+  dockerfile_path: Dockerfile
+  build:
+    context: .
+  ports:
+    - 8000:8000
