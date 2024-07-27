@@ -31,9 +31,9 @@ body {
 }
 
 .logo {
-    background-image: url(../icon/Title.png);
-    width: 130px; /* 너비를 컨테이너에 맞추기 */
-    height: 84px;
+    background-image: url(../icon/JBTI.png);
+    width: 180px; /* 너비를 컨테이너에 맞추기 */
+    height: 120px;
     background-size: contain;
     background-repeat: no-repeat; /* 이미지가 반복되지 않도록 설정 */
     background-position: center; /* 이미지가 중앙에 위치하도록 설정 */

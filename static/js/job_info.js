@@ -14,6 +14,11 @@ async function fetchJobDetails() {
     return data; // 데이터를 반환
 }
 
+function goBack() {
+    window.history.back();
+}
+
+
 // DOMContentLoaded 이벤트가 발생했을 때 실행될 함수
 document.addEventListener('DOMContentLoaded', async () => {
     const jobSelect = document.getElementById('job-select'); // 'job-select' 요소를 선택
@@ -26,6 +31,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const jobs = await fetchJobs(); // 직무 데이터를 가져옴 
     const jobDetails = await fetchJobDetails(); // 직업 설명 데이터를 가져옴
+
+    // Add this function to handle auto-expanding textareas
+    function autoExpandTextarea(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+
+    // Add event listeners to automatically expand textareas when their content changes
+    const textareas = document.querySelectorAll('.info-group textarea');
+    textareas.forEach(textarea => {
+        textarea.classList.add('auto-expand');
+        textarea.addEventListener('input', () => autoExpandTextarea(textarea));
+    });
+
+    // Adjust textarea height on content load
+    function adjustTextareas() {
+        textareas.forEach(textarea => {
+            autoExpandTextarea(textarea);
+        });
+    }
+    
+    // Fetch data and adjust textareas afterwards
+    adjustTextareas();    
 
     // 직무 데이터를 Set으로 변환하여 중복 제거
     const uniqueJobs = [...new Set(jobs.map(job => job.직무.trim()))]; // 직무 데이터에서 중복을 제거하여 고유한 직무 목록 생성
@@ -93,6 +121,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             joboutlook.value = selectedoutlook["직업 전망"]; 
         } else {
             joboutlook.value = ''; // 선택된 직종에 해당하는 직업 설명이 없으면 빈 값으로 설정
-        }
+        }        
+
+        adjustTextareas(); 
     });
 });
