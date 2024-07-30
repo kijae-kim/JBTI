@@ -83,3 +83,7 @@ document.getElementById('main').addEventListener('click', function() {
 document.getElementById('job_info').addEventListener('click', function() {
     window.location.href = '/job_info'; 
 });
+
+document.getElementById('info_edit').addEventListener('click', function() {
+    window.location.href = '/info_edit';
+});

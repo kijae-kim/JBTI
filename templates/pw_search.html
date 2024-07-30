@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비밀번호 찾기</title>
+    <link rel="stylesheet" href="/static/css/pw_search.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="/static/icon/previous.png" id="back-button" alt="Back" onclick="goBack()">
+            <div class="status"></div>
+        </header>
+        <main>
+            <h1>비밀번호 찾기</h1>
+            <form id="pwSearchForm">
+                <div class="input-group">
+                    <label for="userid">아이디 *</label>
+                    <input type="text" id="userid" name="userid" required>
+                </div>
+                <div class="input-group">
+                    <label for="name">이름 *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="hp">휴대폰 번호 *</label>
+                    <input type="tel" id="hp" name="hp" required>
+                </div>
+                <button type="submit">확인</button>
+            </form>
+        </main>
+    </div>
+    <script src="/static/js/pw_search.js"></script>
+</body>
+</html>

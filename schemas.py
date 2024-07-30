@@ -26,6 +26,16 @@ class TokenData(BaseModel):
 class UserDeleteRequest(BaseModel):
     userid: str
 
+class UserIDSearchRequest(BaseModel):
+    name: str
+    password: str
+    hp: str
+
+class UserPWSearchRequest(BaseModel):
+    userid: str
+    name: str
+    hp: str
+
 class Result(BaseModel):
 	line1: str
 	line2: str
@@ -34,3 +44,10 @@ class Result(BaseModel):
 	line5: str
 	line6: str
 	line7: str
+     
+class UserUpdateRequest(BaseModel):
+    userid: str = None
+    email: EmailStr = None
+    name: str = None
+    hp: str = None
+    password: str = None

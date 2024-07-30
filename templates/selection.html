@@ -12,9 +12,7 @@
             <h1>JBTI 검사</h1>
         </header>
         <section id="mbti-section" class="image-section">
-            <div class="image-space1">
-                <!-- Space for future image -->
-            </div>
+            <img id="mbti-image" src="" alt="MBTI Image" style="display:none;">            
         </section>
         <div class="dropdown mbti-dropdown">
             <button class="dropdown-button" onclick="toggleMbtiDropdown()">MBTI 선택 <span class="triangle">&#9660;</span></button>
@@ -37,7 +35,9 @@
                 <li onclick="selectMbti(this)">ESFP</li>
             </ul>
         </div>
-        <div class="image-space" style="height: 200px;"></div>
+        <section id="job-section" class="image-section">
+            <img id="job-image" src="" alt="job Image" style="display:none;">
+        </section>  
         <div class="dropdown job-category-dropdown">
             <button class="dropdown-button" onclick="toggleJobCategory()">직군 선택 <span class="triangle">&#9660;</span></button>
             <ul id="job-category-list" class="dropdown-content">
@@ -70,7 +70,7 @@
                 <li onclick="selectJobCategory(this)">기계 설치·정비·생산직</li>
                 <li onclick="selectJobCategory(this)">금속·재료 설치·정비·생산직(판금·단조·주조·용접·도장 등)</li>
                 <li onclick="selectJobCategory(this)">전기·전자 설치·정비·생산직</li>
-                <li onclick="selectJobCategory(this)">청소 및 기타 개인서비스직</li>
+                <!-- <li onclick="selectJobCategory(this)">청소 및 기타 개인서비스직</li> -->
                 <li onclick="selectJobCategory(this)">정보통신 설치·정비직</li>
                 <li onclick="selectJobCategory(this)">화학·환경 설치·정비·생산직</li>
                 <li onclick="selectJobCategory(this)">섬유·의복 생산직</li>

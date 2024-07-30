@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 
 from auth import get_current_user
 from models import User
-from schemas import UserCreate, UserInDB, Token, Result
+from schemas import UserCreate, UserInDB, Token, UserIDSearchRequest, UserPWSearchRequest, Result, UserUpdateRequest
 
 import os
 import json
@@ -64,6 +64,8 @@ MONGO_DETAILS = os.getenv("MONGO_DETAILS", "mongodb+srv://zzcv00:dwiqPBh62FHd1sL
 client = AsyncIOMotorClient(MONGO_DETAILS, tlsCAFile=ca)
 db = client['lkj']
 collection = db['JBTI']
+users_collection = db['users']
+
 
 # MongoDB 연결 테스트
 async def connect_to_mongo():
@@ -75,7 +77,11 @@ async def connect_to_mongo():
 
 @app.on_event("startup")
 async def startup_db_client():
-    await connect_to_mongo()
+    try:
+        await client.admin.command('ping')
+        print("Successfully connected to MongoDB")
+    except Exception as e:
+        print(f"Failed to connect to MongoDB: {e}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
@@ -234,6 +240,55 @@ async def delete_user(current_user: dict = Depends(get_current_user)):
     else:
         raise HTTPException(status_code=404, detail="User not found")
 
+@app.post('/search_userid')
+async def search_userid(request: UserIDSearchRequest):
+    user = await db["users"].find_one({"name": request.name, "hp": request.hp})
+    
+    if user and pwd_context.verify(request.password, user['hashed_password']):
+        return {"success": True, "userid": user['userid']}
+    
+    return {"success": False}
+
+@app.post('/search_password')
+async def search_password(request: UserPWSearchRequest):
+    user = await db["users"].find_one({"userid": request.userid, "name": request.name, "hp": request.hp})
+    if user:        
+        if 'hashed_password' in user and pwd_context.verify(request.hp, user['hashed_password']):
+            return {"success": True, "password": user['hashed_password']}
+    return {"success": False}
+
+@app.put("/api/info_edit", response_model=UserInDB)
+async def update_user(userid: str, user_update: UserUpdateRequest, token: str = Depends(oauth2_scheme)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id_from_token: str = payload.get("sub")
+        if user_id_from_token != userid:
+            raise HTTPException(status_code=403, detail="Operation not permitted")
+
+        user = await users_collection.find_one({"userid": userid})
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        update_data = {k: v for k, v in user_update.dict().items() if v is not None}
+
+        if "password" in update_data:
+            update_data["hashed_password"] = pwd_context.hash(update_data.pop("password"))
+
+        updated_user = await users_collection.find_one_and_update(
+            {"userid": userid},
+            {"$set": update_data},
+            return_document=True
+        )
+
+        if not updated_user:
+            raise HTTPException(status_code=404, detail="User update failed")
+
+        updated_user["id"] = str(updated_user["_id"])
+        updated_user.pop("_id")  # _id 필드 제거
+        return UserInDB(**updated_user)
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+
 @app.get("/api/job-fields")
 async def get_job_fields():
     try:
@@ -285,23 +340,15 @@ async def get_loading(request: Request):
 
 @app.get("/api/result", response_model=Result)
 def get_result(mbti: str = Query(...), jobcategory: str = Query(...)):
-    result = create_main(mbti, jobcategory)
-    
-    if isinstance(result, dict):  # 결과가 딕셔너리인 경우
-        if result["line1"] != "No result found.":
-            return Result(
-                line1=result.get("line1",""),
-                line2=result.get("line2",""),
-                line3=result.get("line3",""),
-                line4=result.get("line4",""),
-                line5=result.get("line5",""),
-                line6=result.get("line6",""),
-                line7=result.get("line7","")
-            )
+    try:
+        result = create_main(mbti, jobcategory)
+        
+        if isinstance(result, dict):  # 결과가 딕셔너리인 경우
+            return result
         else:
-            raise HTTPException(status_code=404, detail="Result not found for the given MBTI and Job Category")
-    else:
-        raise HTTPException(status_code=500, detail="Unexpected result format")
+            raise HTTPException(status_code=500, detail="Unexpected result format")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
     
 @app.get("/result", response_class=HTMLResponse)
@@ -328,6 +375,18 @@ async def get_join_in(request: Request):
 @app.get("/mypage", response_class=HTMLResponse)
 async def get_mypage(request: Request):
     return templates.TemplateResponse("mypage.html", {"request": request})
+
+@app.get("/info_edit", response_class=HTMLResponse)
+async def get_info_edit(request: Request):
+    return templates.TemplateResponse("info_edit.html", {"request": request})
+
+@app.get("/id_search", response_class=HTMLResponse)
+async def get_id_search(request: Request):
+    return templates.TemplateResponse("id_search.html", {"request": request})
+
+@app.get("/pw_search", response_class=HTMLResponse)
+async def get_pw_search(request: Request):
+    return templates.TemplateResponse("pw_search.html", {"request": request})
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)

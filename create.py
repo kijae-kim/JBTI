@@ -15,13 +15,17 @@ import logging
 from typing import List, Dict, Any, Tuple
 from pymongo import MongoClient
 import datetime
+import certifi
+
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # 몽고 연결 설정
 def get_mongodb_client(uri: str):
-    return MongoClient(uri)
+    return MongoClient(uri, tlsCAFile=ca)
+
+ca = certifi.where()
 
 # MongoDB에서 데이터 로드 함수
 def load_data_from_mongodb(client: MongoClient, db_name: str, collection_name: str):
