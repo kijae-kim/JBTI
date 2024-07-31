@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     const mbti = urlParams.get('mbti');
     const jobcategory = urlParams.get('jobCategory');
 
-    const response = await fetch(`http://localhost:8000/api/result?mbti=${encodeURIComponent(mbti)}&jobcategory=${encodeURIComponent(jobcategory)}`);
+    const response = await fetch(`https://port-0-jbti-lytt5wni284bca4f.sel4.cloudtype.app/api/result?mbti=${encodeURIComponent(mbti)}&jobcategory=${encodeURIComponent(jobcategory)}`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
