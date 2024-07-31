@@ -9,13 +9,14 @@ import re
 import numpy as np  
 
 import certifi
-ca = certifi.where()
 
+ca = certifi.where()
 
 # 로깅 설정
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # OpenAI API 키 설정
+openai.api_key = "[API_KEY]"
 
 # MongoDB 연결 설정
 def get_mongodb_client(uri: str):
