@@ -1,6 +1,6 @@
 // // 서버로부터 직무 데이터를 가져오는 함수
 async function fetchJobs() {
-    const response = await fetch('http://localhost:8000/api/job-fields'); // API 요청을 통해 직무 데이터를 가져옴
+    const response = await fetch('/api/job-fields'); // API 요청을 통해 직무 데이터를 가져옴
     const data = await response.json(); // 응답 데이터를 JSON 형식으로 변환
     console.log('Fetched Jobs:', data); // 가져온 데이터를 콘솔에 출력
     return data; // 데이터를 반환
@@ -8,7 +8,7 @@ async function fetchJobs() {
 
 // 서버로부터 직업 설명 데이터를 가져오는 함수
 async function fetchJobDetails() {
-    const response = await fetch('http://localhost:8000/api/job-details'); // API 요청을 통해 직업 설명 데이터를 가져옴
+    const response = await fetch('/api/job-details'); // API 요청을 통해 직업 설명 데이터를 가져옴
     const data = await response.json(); // 응답 데이터를 JSON 형식으로 변환
     console.log('Fetched Job Details:', data); // 가져온 데이터를 콘솔에 출력
     return data; // 데이터를 반환
