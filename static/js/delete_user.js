@@ -3,7 +3,7 @@ document.getElementById('delete-user-btn').addEventListener('click', async funct
     const token = document.cookie.split('; ').find(row => row.startsWith('token=')).split('=')[1];
 
     try {
-        const response = await fetch('http://localhost:8000/delete_user', {
+        const response = await fetch('/delete_user', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
