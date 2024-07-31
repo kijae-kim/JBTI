@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from sklearn.metrics.pairwise import cosine_similarity
 import re  
 import numpy as np  
+import os
 
 import certifi
 
@@ -16,7 +17,7 @@ ca = certifi.where()
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # OpenAI API 키 설정
-openai.api_key = "[API_KEY]"
+openai.api_key = os.environ.get("API_KEY")
 
 # MongoDB 연결 설정
 def get_mongodb_client(uri: str):
