@@ -42,7 +42,7 @@ document.getElementById('delete-user-btn').addEventListener('click', async funct
     console.log('토큰:', token);
 
     try {
-        const response = await fetch('http://localhost:8000/delete_user', {
+        const response = await fetch('/delete_user', {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -57,7 +57,7 @@ document.getElementById('delete-user-btn').addEventListener('click', async funct
             deleteMessage.style.color = "green";
             console.log('회원 탈퇴 성공:', result.message);
             alert('회원 탈퇴가 완료되었습니다.');
-            window.location.href = 'http://127.0.0.1:8000';  // 로그인 페이지로 리다이렉트
+            window.location.href = '/';  // 로그인 페이지로 리다이렉트
         } else {
             const errorResult = await response.json();
             deleteMessage.textContent = errorResult.detail;
@@ -73,7 +73,7 @@ document.getElementById('delete-user-btn').addEventListener('click', async funct
 
 document.getElementById('logout-button').addEventListener('click', function() {    
     document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    window.location.href = 'http://127.0.0.1:8000/';
+    window.location.href = '/';
 });
 
 document.getElementById('main').addEventListener('click', function() {
