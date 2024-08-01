@@ -4,36 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보 수정</title>
-    <link rel="stylesheet" href="../css/info_edit.css">
+    <link rel="stylesheet" href="/static/css/info_edit.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>회원 정보 수정</h1>
         </header>
-        <form class="member-info-form">
+        <form id="member-info-form" class="member-info-form" method="post" action="/update_user">
             <div class="info-group">
                 <label for="name">이름:</label>
                 <input type="text" id="name" name="name">
             </div>
             <div class="info-group">
-                <label for="phone-number">전화번호:</label>
-                <input type="text" id="phone-number" name="phone-number">
+                <label for="hp">전화번호:</label>
+                <input type="text" id="hp" name="hp">
             </div>
             <div class="info-group">
-                <label for="username">아이디:</label>
-                <input type="text" id="username" name="username">
+                <label for="userid">아이디:</label>
+                <input type="text" id="userid" name="userid">
             </div>
             <div class="info-group">
                 <label for="password">비밀번호:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" maxlength="12">
             </div>
             <div class="info-group">
                 <label for="email">이메일:</label>
                 <input type="email" id="email" name="email">
             </div>
-            <button type="submit" class="update-button">회원 정보 수정</button>
+            <button type="submit" class="update-button">수정 하기</button>
         </form>
     </div>
+    <script src="/static/js/info_edit.js"></script>
 </body>
 </html>
