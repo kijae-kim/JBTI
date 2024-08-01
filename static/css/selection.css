@@ -13,6 +13,7 @@
     font-family: 'Pretendard-Regular', Arial, sans-serif;
 }
 
+
 body {
     background-color: #fff;
     color: #333;
@@ -39,16 +40,31 @@ body {
 
 /* Header Styles */
 .main-header {
+    display: flex;
+    align-items: center;
     margin-bottom: 20px;
     padding: 10px;
     background-color: #FF7F00;
     border-radius: 10px;
     width: 300px;
+    position: relative; /* Use relative positioning */
+}
+
+#back-button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute; /* Use absolute positioning */
+    left: 10px; /* Position it at the start */
+    transform: rotate(90deg);
 }
 
 .main-header h1 {
     font-size: 2em;
     color: #fff;
+    flex-grow: 1; /* Ensure it takes up available space */
+    text-align: center; /* Center the text */
+    margin-right: 20px;
 }
 
 #mbti-image {
