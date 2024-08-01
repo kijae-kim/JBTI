@@ -1,3 +1,7 @@
+function goBack() {
+    window.history.back();
+}
+
 function toggleMbtiDropdown() {
     const mbtiList = document.getElementById('mbti-list');
     mbtiList.style.display = mbtiList.style.display === 'block' ? 'none' : 'block';
