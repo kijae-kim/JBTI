@@ -6,6 +6,8 @@ import datetime
 from pymongo import MongoClient
 from sklearn.metrics.pairwise import cosine_similarity
 import re  
+# from soynlp.normalizer import repeat_normalize
+# from soynlp.tokenizer import LTokenizer
 import numpy as np  
 import os
 
