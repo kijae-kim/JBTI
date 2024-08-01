@@ -17,7 +17,8 @@ ca = certifi.where()
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # OpenAI API 키 설정
-openai.api_key = os.environ.get("API_KEY")
+openai.api_key = "[API_KEY]"
+
 
 # MongoDB 연결 설정
 def get_mongodb_client(uri: str):
@@ -39,6 +40,17 @@ def load_data_from_mongodb(client: MongoClient, db_name: str, collection_name: s
         return pd.DataFrame(data)
     except Exception as e:
         logging.error(f"{collection_name}에서 데이터 로드 실패: {e}")
+        raise e
+
+# 설정 파일 로드
+def load_config(config_path: str) -> dict:
+    try:
+        with open(config_path, 'r') as f:
+            config = json.load(f)
+        logging.info("설정 파일 로드 성공")
+        return config
+    except Exception as e:
+        logging.error(f"설정 파일 로드 실패: {e}")
         raise e
 
 # 설정 파일 로드
@@ -89,40 +101,24 @@ def prepare_data(config, client):
         logging.error(f"데이터 준비 중 오류 발생: {e}")
         raise e
 
-# GPT 모델을 사용한 텍스트 생성 함수
-def generate_texts(prompts, model_name):
-    responses = []
-    for prompt in prompts:
-        try:
-            response = openai.Completion.create(
-                model=model_name,
-                prompt=prompt,
-                max_tokens=150
-            )
-            responses.append(response.choices[0].text.strip())
-        except Exception as e:
-            logging.error(f"텍스트 생성 실패 (prompt: {prompt}): {e}")
-            raise e
-    return responses
-
-# 파인튜닝된 GPT 모델을 위한 임베딩 생성 함수
-def create_fine_tuned_gpt_embedding(texts, model_name):
-    embeddings = []
-    for text in texts:
-        try:
-            response = openai.Embedding.create(model=model_name, input=text)
-            embeddings.append(response['data'][0]['embedding'])
-        except Exception as e:
-            logging.error(f"임베딩 생성 실패 (text: {text}): {e}")
-            raise e
-    return np.array(embeddings)
+# MongoDB에서 임베딩 로드 함수
+def load_embeddings_from_mongodb(client, db_name, collection_name):
+    try:
+        db = client[db_name]
+        collection = db[collection_name]
+        embeddings_data = collection.find_one()
+        mbti_embeddings = np.array(embeddings_data['mbti_embeddings'])
+        holland_embeddings = np.array(embeddings_data['holland_embeddings'])
+        job_embeddings = np.array(embeddings_data['job_embeddings'])
+        logging.info(f"{collection_name}에서 임베딩 로드 성공")
+        return mbti_embeddings, holland_embeddings, job_embeddings
+    except Exception as e:
+        logging.error(f"{collection_name}에서 임베딩 로드 실패: {e}")
+        raise e
 
 # 결과 생성 및 출력 함수
-def generate_results(mbti_detail_df, holland_result_df, fine_tuned_model, embedding_model):
+def generate_results(mbti_detail_df, holland_result_df, mbti_embeddings, holland_embeddings, fine_tuned_model):
     results = []
-    mbti_embeddings = create_fine_tuned_gpt_embedding(mbti_detail_df['processed_특징'].tolist(), embedding_model)
-    holland_embeddings = create_fine_tuned_gpt_embedding(holland_result_df['processed_상세설명'].tolist(), embedding_model)
-    
     for mbti_idx, mbti_row in mbti_detail_df.iterrows():
         best_match = None
         best_score = 0
@@ -147,23 +143,9 @@ def generate_results(mbti_detail_df, holland_result_df, fine_tuned_model, embedd
     logging.info(f"Total results generated: {len(results)}")
     return results
 
-# MongoDB에 결과 저장 함수
-def save_results_to_collection(client: MongoClient, db_name: str, collection_name: str, response: dict, ttl_seconds: int):
-    db = client[db_name]
-    collection = db[collection_name]
-    expire_at = datetime.datetime.utcnow() + datetime.timedelta(seconds=ttl_seconds)
-    response['expireAt'] = expire_at
-    try:
-        collection.insert_one(response)
-        logging.info(f"Saved response to MongoDB collection '{collection_name}' in database '{db_name}'")
-    except Exception as e:
-        logging.error(f"MongoDB 컬렉션 '{collection_name}'에 응답 저장 실패: {e}")
-        raise e
-
 # 최종 결과 생성 함수
-def final_results(user_mbti, user_job, mbti_detail_df, holland_result_df, job_detail_df, results, client, config, ttl_seconds, fine_tuned_model, embedding_model):
+def final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embeddings, job_embeddings, results, client, config, ttl_seconds):
     logging.debug(f"최종 결과 생성 중, 사용자 MBTI: {user_mbti}, 사용자 직업: {user_job}")
-    job_embeddings = create_fine_tuned_gpt_embedding(job_detail_df['processed_직업 설명'].tolist(), embedding_model)
 
     user_result = next((result for result in results if result['MBTI'].upper() == user_mbti.upper()), None)
     if not user_result:
@@ -178,7 +160,7 @@ def final_results(user_mbti, user_job, mbti_detail_df, holland_result_df, job_de
     user_mbti_idx = user_mbti_indices[0]
     logging.info(f"Found MBTI index: {user_mbti_idx}")
 
-    user_mbti_emb = create_fine_tuned_gpt_embedding([mbti_detail_df.at[user_mbti_idx, 'processed_특징']], embedding_model)[0].reshape(1, -1)
+    user_mbti_emb = mbti_embeddings[user_mbti_idx].reshape(1, -1)
     similarities = cosine_similarity(user_mbti_emb, job_embeddings).flatten()
 
     logging.info(f"Calculated similarities for {user_mbti}: min={min(similarities)}, max={max(similarities)}, mean={sum(similarities) / len(similarities)}")
@@ -223,24 +205,37 @@ def final_results(user_mbti, user_job, mbti_detail_df, holland_result_df, job_de
 
     return initial_response, additional_response
 
+# MongoDB에 결과 저장 함수
+def save_results_to_collection(client: MongoClient, db_name: str, collection_name: str, response: dict, ttl_seconds: int):
+    db = client[db_name]
+    collection = db[collection_name]
+    expire_at = datetime.datetime.utcnow() + datetime.timedelta(seconds=ttl_seconds)
+    response['expireAt'] = expire_at
+    try:
+        collection.insert_one(response)
+        logging.info(f"Saved response to MongoDB collection '{collection_name}' in database '{db_name}'")
+    except Exception as e:
+        logging.error(f"MongoDB 컬렉션 '{collection_name}'에 응답 저장 실패: {e}")
+        raise e
 
-# 메인 함수 수정
+# 메인 함수
 def main(user_mbti, user_job):
     try:
-        config = load_config('json/config.json')
+        config = load_config('./json/config.json')
         mongodb_uri = config['mongodb']['uri']
         client = get_mongodb_client(mongodb_uri)
 
         logging.info("1. 데이터 로딩 및 전처리 시작")
-        mbti_detail_df, holland_result_df, job_detail_df = prepare_data(config, client)  # 네 개의 반환값 받기
+        mbti_detail_df, holland_result_df, job_detail_df = prepare_data(config, client)
 
-        logging.info("2. 임베딩 생성 및 유사도 계산 시작")
+        logging.info("2. 임베딩 로드 및 유사도 계산 시작")
 
+        mbti_embeddings, holland_embeddings, job_embeddings = load_embeddings_from_mongodb(client, config['mongodb']['db_name'], 'embeddings_collection')
+        
         # 파인튜닝된 모델 ID 설정
         fine_tuned_model = "ft:gpt-3.5-turbo-0125:personal::9qa3DaXk"
-        embedding_model = "text-embedding-ada-002"
-
-        results = generate_results(mbti_detail_df, holland_result_df, fine_tuned_model, embedding_model)
+        
+        results = generate_results(mbti_detail_df, holland_result_df, mbti_embeddings, holland_embeddings, fine_tuned_model)
         logging.info(f"Generated results for MBTI types: {[r['MBTI'] for r in results]}")
 
         logging.info("3. 사용자 입력 받기")
@@ -248,12 +243,10 @@ def main(user_mbti, user_job):
 
         logging.info("4. 최종 결과 생성 및 MongoDB에 저장")
         ttl_seconds = 3600
-        initial_response, additional_response = final_results(user_mbti, user_job, mbti_detail_df, holland_result_df, job_detail_df, results, client, config, ttl_seconds, fine_tuned_model, embedding_model)
+        initial_response, additional_response = final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embeddings, job_embeddings, results, client, config, ttl_seconds)
         logging.info("결과가 MongoDB에 저장되었습니다.")
         logging.info(initial_response)
         logging.info(additional_response)
-
-        # return initial_response, additional_response
 
         return {
             "line1": initial_response[0] if len(initial_response) > 0 else "",
@@ -266,6 +259,7 @@ def main(user_mbti, user_job):
         }
     except Exception as e:
         logging.error(f"메인 함수 실행 중 오류 발생: {e}")
+        raise e
 
 if __name__ == "__main__":
     try:
@@ -274,4 +268,4 @@ if __name__ == "__main__":
         user_job = input("사용자의 직업을 입력하세요: ")
         main(user_mbti, user_job)
     except Exception as e:
-        logging.error(f"메인 함ㅜ 실행 중 오류 발생: {e}")
+        logging.error(f"프로그램 실행 중 오류 발생: {e}")
