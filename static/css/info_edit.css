@@ -5,6 +5,7 @@
     font-family: Arial, sans-serif;
 }
 
+
 body {
     background-color: #fff;
     color: #333;
@@ -16,9 +17,8 @@ body {
 }
 
 .container {
-    width: 100%;
-    max-width: 430px;
-    height: 932px;
+    max-width: 375px;
+    height: 667px;
     padding: 15px;
     margin: auto;
     display: flex;
