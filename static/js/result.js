@@ -20,6 +20,38 @@ document.addEventListener("DOMContentLoaded", async function() {
     document.getElementById('line6').textContent = data.line6;
 });
 
+// 다운로드
+document.getElementById('download').addEventListener('click', function() {
+    // Select the part of the .result-box excluding the .box section
+    const resultBox = document.querySelector('.result-box');
+    const box = document.querySelector('.box');
+    
+    // Temporarily hide the .box section
+    box.style.display = 'none';
+
+    // Temporarily set height to auto to capture the full content
+    resultBox.style.height = 'auto';
+    resultBox.style.overflow = 'visible';
+
+    html2canvas(resultBox, { useCORS: true }).then(canvas => {
+        // Restore the display of .box section and revert styles
+        box.style.display = 'flex';
+        resultBox.style.height = '';
+        resultBox.style.overflow = '';
+
+        // Create an image from the canvas
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL('image/png');
+        link.download = 'result.png';
+        link.click();
+    });
+});
+
+
+document.getElementById('home').addEventListener('click', function() {
+    window.location.href = '/main';
+});
+
 // 결과더보기 창 확대
 const toggleVisibility = () => {
     const sentence = document.getElementById('sentence');
