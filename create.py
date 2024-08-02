@@ -96,7 +96,7 @@ def prepare_data(config, client):
         mbti_detail_df['processed_특징'] = mbti_detail_df['특징'].apply(preprocess_text)
         holland_result_df['processed_상세설명'] = holland_result_df['상세 설명'].apply(preprocess_text)
         job_detail_df['processed_직업 설명'] = job_detail_df['직업 설명'].apply(preprocess_text)
-        job_detail_df['processed_직무'] = job_detail_df['직무'].apply(preprocess_text_soynlp)
+        job_detail_df['processed_직무'] = job_detail_df['직무'].apply(preprocess_text)
 
         logging.info("데이터 준비 완료")
         return mbti_detail_df, holland_result_df, job_detail_df
