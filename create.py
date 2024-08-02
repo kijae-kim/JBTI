@@ -167,18 +167,22 @@ def final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embed
 
     logging.info(f"Calculated similarities for {user_mbti}: min={min(similarities)}, max={max(similarities)}, mean={sum(similarities) / len(similarities)}")
 
-    user_job_idx = job_detail_df.index[job_detail_df['직무'] == user_job].tolist()
-    if user_job_idx:
-        user_job_idx = user_job_idx[0]
-        user_job_similarity = similarities[user_job_idx] * 100  # Convert to percentage
-    else:
-        user_job_similarity = 0
+    # user_job_idx = job_detail_df.index[job_detail_df['직무'] == user_job].tolist()
+    # if user_job_idx:
+    #     user_job_idx = user_job_idx[0]
+    #     user_job_similarity = similarities[user_job_idx] * 100  # Convert to percentage
+    # else:
+    #     user_job_similarity = 0
+
+    
 
     top_3_jobs_idx = np.argsort(similarities)[-3:][::-1]
     top_3_jobs = job_detail_df.iloc[top_3_jobs_idx]
 
     top_3_jobs_list = [row['직무'] for _, row in top_3_jobs.iterrows()]
     top_3_similarities = similarities[top_3_jobs_idx] * 100  # Convert to percentage
+
+    user_job_similarity = int(top_3_similarities[0] + top_3_similarities[1] + top_3_similarities[2]) / 3
 
     logging.info(f"Top 3 jobs: {top_3_jobs_list}")
     logging.info(f"Top 3 similarities: {top_3_similarities}")
