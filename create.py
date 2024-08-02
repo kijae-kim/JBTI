@@ -96,6 +96,7 @@ def prepare_data(config, client):
         mbti_detail_df['processed_특징'] = mbti_detail_df['특징'].apply(preprocess_text)
         holland_result_df['processed_상세설명'] = holland_result_df['상세 설명'].apply(preprocess_text)
         job_detail_df['processed_직업 설명'] = job_detail_df['직업 설명'].apply(preprocess_text)
+        job_detail_df['processed_직무'] = job_detail_df['직무'].apply(preprocess_text_soynlp)
 
         logging.info("데이터 준비 완료")
         return mbti_detail_df, holland_result_df, job_detail_df
@@ -157,6 +158,7 @@ def final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embed
     logging.info(f"Found user result for MBTI {user_mbti}: {user_result}")
 
     user_mbti_indices = mbti_detail_df.index[mbti_detail_df['유형'].str.upper() == user_mbti.upper()].tolist()
+    
     if not user_mbti_indices:
         return f"사용자의 MBTI({user_mbti})에 해당하는 결과를 찾을 수 없습니다."
     user_mbti_idx = user_mbti_indices[0]
@@ -167,22 +169,22 @@ def final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embed
 
     logging.info(f"Calculated similarities for {user_mbti}: min={min(similarities)}, max={max(similarities)}, mean={sum(similarities) / len(similarities)}")
 
-    # user_job_idx = job_detail_df.index[job_detail_df['직무'] == user_job].tolist()
-    # if user_job_idx:
-    #     user_job_idx = user_job_idx[0]
-    #     user_job_similarity = similarities[user_job_idx] * 100  # Convert to percentage
-    # else:
-    #     user_job_similarity = 0
+    processed_user_job = preprocess_text_soynlp(user_job)
 
+    user_job_idx = job_detail_df.index[job_detail_df['processed_직무'] == processed_user_job].tolist()
     
+    if user_job_idx:
+        user_job_idx = user_job_idx[0]
+        user_job_similarity = similarities[user_job_idx] * 100  # Convert to percentage
+    else:
+        most_similar_job_idx = np.argmax(similarities)
+        user_job_similarity = similarities[most_similar_job_idx] * 100
 
     top_3_jobs_idx = np.argsort(similarities)[-3:][::-1]
     top_3_jobs = job_detail_df.iloc[top_3_jobs_idx]
 
     top_3_jobs_list = [row['직무'] for _, row in top_3_jobs.iterrows()]
     top_3_similarities = similarities[top_3_jobs_idx] * 100  # Convert to percentage
-
-    user_job_similarity = int(top_3_similarities[0] + top_3_similarities[1] + top_3_similarities[2]) / 3
 
     logging.info(f"Top 3 jobs: {top_3_jobs_list}")
     logging.info(f"Top 3 similarities: {top_3_similarities}")
