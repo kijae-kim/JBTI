@@ -191,7 +191,7 @@ def final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embed
 
     initial_response = [
         f"사용자님의 MBTI {user_mbti}는 {user_job} 직업과 {user_job_similarity:.2f}% 정도의 유사도를 보여줍니다.",
-        f"사용자님의 성향 중 {user_result['Best Match Description']}한 부분들이 이 직업에 도움을 줄 수 있습니다."
+        f"사용자님의 성향 중 {user_result['Best Match Description']} 이러한 부분들이 이 직업에 도움을 줄 수 있습니다."
     ]
 
     additional_response = [
