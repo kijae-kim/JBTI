@@ -169,7 +169,7 @@ def final_results(user_mbti, user_job, mbti_detail_df, job_detail_df, mbti_embed
 
     logging.info(f"Calculated similarities for {user_mbti}: min={min(similarities)}, max={max(similarities)}, mean={sum(similarities) / len(similarities)}")
 
-    processed_user_job = preprocess_text_soynlp(user_job)
+    processed_user_job = preprocess_text(user_job)
 
     user_job_idx = job_detail_df.index[job_detail_df['processed_직무'] == processed_user_job].tolist()
     
