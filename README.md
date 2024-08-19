@@ -23,7 +23,7 @@ MBTI는 개인의 성격과 적성을 잘 보여주고 있는 지표이자 신�
 
 # 💾 DataSet & Model
 ### DataSet
-
+![7](https://github.com/user-attachments/assets/4d639428-b09f-4de3-8a97-259c9a7d8d30)
 ### Model
 
 
