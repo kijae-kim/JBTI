@@ -30,7 +30,9 @@ MBTI는 개인의 성격과 적성을 잘 보여주고 있는 지표이자 신�
 
 # **📖 Service Explain**
 ![6](https://github.com/user-attachments/assets/fb9bd1f1-2a8d-4050-aa24-3e7e053e53ef)
-
+![10](https://github.com/user-attachments/assets/d3b4e10f-c720-451c-b628-1229888fb0c9)
+![11](https://github.com/user-attachments/assets/29b7a985-97e9-4b6e-8229-070b609c4f06)
+![12](https://github.com/user-attachments/assets/93c78014-3192-48f0-8c42-da40b27326c8)
 
 <br>
 
