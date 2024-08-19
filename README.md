@@ -41,4 +41,13 @@ MBTI는 개인의 성격과 적성을 잘 보여주고 있는 지표이자 신�
 <br>
 
 # **🛠️ Skill&Tool**
+<img alt="Html" src ="https://img.shields.io/badge/HTML5-E34F26.svg?&style=for-the-badge&logo=HTML5&logoColor=white"/> <img alt="Css" src ="https://img.shields.io/badge/CSS3-1572B6.svg?&style=for-the-badge&logo=CSS3&logoColor=white"/> <img alt="JavaScript" src ="https://img.shields.io/badge/JavaScriipt-F7DF1E.svg?&style=for-the-badge&logo=JavaScript&logoColor=black"/> <img alt="Python" src ="https://img.shields.io/badge/Python-3776AB.svg?&style=for-the-badge&logo=Python&logoColor=white"/> <img alt="FastAPI" src ="https://img.shields.io/badge/fastapi-009688.svg?&style=for-the-badge&logo=Python&logoColor=white"/>
+<br>
+<img alt="MongoDB" src ="https://img.shields.io/badge/MongoDB-47A248.svg?&style=for-the-badge&logo=Python&logoColor=white"/>
+<img alt="AWS" src ="https://img.shields.io/badge/amazonec2-FF9900.svg?&style=for-the-badge&logo=Python&logoColor=white"/>
+<img alt="googleplay" src ="https://img.shields.io/badge/googleplay-414141.svg?&style=for-the-badge&logo=Python&logoColor=white"/>
+
+
+
+
 
